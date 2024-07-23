@@ -16,6 +16,10 @@ Alpine.store('state', {
            this.filterItem = item;
   },
 
+  setSorting(item){
+    this.sorting = item.target.value;
+  },
+
   setSearchTerm(item){
     this.searchTerm = item.target.value;
   },

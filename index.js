@@ -12,6 +12,13 @@ Alpine.store('state', {
   sorting: "default",
   searchTerm: "",
   filterItem: "All categories",
+  changeRoute: false,
+  viewedProduct:null,
+
+  setViewedProduct(p){
+     this.viewedProduct = p;
+     this.changeRoute = true;
+  },
 
   setFilterItem(item) {
            this.filterItem = item;
@@ -37,7 +44,7 @@ Alpine.store('state', {
   },
 
   searchProducts() {
-    const  originalProducts  = this;
+    const  originalProducts  = this.products;
     if (this.searchTerm.trim() !== "") {
       const filteredProducts = originalProducts.filter((product) =>
         product.title.toLowerCase().includes(this.searchTerm.toLowerCase())

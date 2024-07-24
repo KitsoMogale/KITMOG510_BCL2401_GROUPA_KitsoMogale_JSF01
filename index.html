@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="./style.css">
 
 </head>
-<body >
+<body class=" bg-blue-400" >
+
+    <div x-data x-show="!$store.state.changeRoute">
     <!-- header -->
 
     <header class="sticky z-50 top-0">
@@ -153,7 +155,7 @@
                 >
                   <li
                     x-data
-                    @click="dropdown = false;$store.state.setFilterItem('All categories');$store.state.fetchProducts "
+                    @click="dropdown = false;$store.state.setFilterItem('All categories');$store.state.fetchProducts() "
                     class="inline-flex w-full px-4 py-2 hover:bg-gray-100"
                   >
                     All categories
@@ -163,7 +165,7 @@
                       <li >
                         <button
                           x-text="cat"
-                          @click="dropdown = false; $store.state.setFilterItem(cat);$store.state.fetchProducts "
+                          @click="dropdown = false; $store.state.setFilterItem(cat);$store.state.fetchProducts() "
                           type="button"
                           class="inline-flex w-full px-4 py-2 hover:bg-gray-100"
                         >
@@ -184,7 +186,7 @@
                   class=" p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
                   placeholder="Search products..."
                   x-model= "searchTerm"
-                  @input="$store.state.setSearchTerm($event);$store.state.searchProduct()"
+                  @input="$store.state.setSearchTerm($event);$store.state.searchProducts()"
                 />
                 <button
                   type="submit"
@@ -220,7 +222,7 @@
               Sort by: 
             </label>
             <select
-              @input="$store.state.setSorting($event);$store.state.sortProduct()"
+              @input="$store.state.setSorting($event);$store.state.sortProducts()"
               x-model="sorting"
               name=""
               id="sort"
@@ -233,149 +235,22 @@
           </div>
       </div>
 
-      <!-- products -->
-<!-- 
-      <div
-       x-data="{loading:$store.state.loading,products:$store.state.products}"
-       x-init="$store.state.fetchProducts()"
-      >
-              
-      <template x-if="products.length > 0">
-        <div
-        x-init="console.log(products)"
-          x-text="products[0].title"
-          class="text-slate-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300"
-        >
-        </div>
-      </template> -->
-      
-      <!-- <template x-if="products.length > 0">
-           
-            <template 
-            x-show="!loading"
-            x-init="console.log(loading)"
-            class="grid justify-center"
-            x-for="product in products"
-            class="lg:max-h-[130rem] max-w-xl mx-auto grid gap-4 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center lg:max-w-none my-4">
-              
-            <div
-            :key="product.id"
-            x-init="console.log('9')"
-            onClick={handleClick}
-            class="flex flex-col max-h-[130rem]  cursor-pointer max-w-80 hover:-translate-y-1 hover:scale-105 duration-300 bg-white border border-slate-200 shadow shadow-slate-950/5 rounded-2xl overflow-hidden"
-          >
-            <img class="object-contain h-48 mt-3" :src='product.image' alt="Course 01" />
-          
-      
-            <div class="flex-1 flex flex-col p-6">
-              <div class="flex-1">
-               
-                <header class="mb-2 flex-2">
-                  <h2 class="text-lg line-clamp-2 font-extrabold leading-snug">
-                    <div 
-                    x-text="product.title"
-                    class="text-slate-600 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300">
-                   
-                    </div>
-                  </h2>
-                </header>
-                <Ratings {...rating} />
-                <div class="text-base line-clamp-2 font-extrabold text-slate-500 leading-snug">
-                  <h2 x-text="product.price"></h2>
-                </div>
-              </div>
-      
-              <div class="flex mt-1 space-x-2">
-                <div class="justify-start flex-1">
-                  <span 
-                  x-text="product.category"
-                  class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                    
-                  </span>
-                </div>
-                <div class="justify-end space-x-2">
-                  <button onClick={addToFavourites}>
-                    <svg
-                      class="me-1.5 h-5 w-5 hover:fill-red-500 "
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      transform="scale(1.6)"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12.01 6.001C6.5 1 1 8 5.782 13.001L12.011 20l6.23-7C23 8 17.5 1 12.01 6.002Z"
-                      />
-                    </svg>
-                  </button>
-      
-                  <button class="inline-flex justify-center whitespace-nowrap rounded-lg bg-cyan-700 px-3 py-2 text-sm font-medium text-white hover:bg-cyan-900 focus-visible:outline-none focus-visible:ring focus-visible:ring-indigo-300 transition-colors">
-                    Add To Cart
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-               
-            </template>
-            
-       </template> -->
-
-         
-
-<!--  
-          <div 
-          x-show="loading"
-          x-init="console.log(products)"
-          class="grid justify-center"
-          class="lg:max-h-[130rem] max-w-xl mx-auto grid gap-4 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center lg:max-w-none my-4">
-
-          <div
-          role="status"
-          class="bg-white max-w-sm p-4 border border-gray-200 rounded shadow animate-pulse md:p-6 dark:border-gray-700"
-        >
-          <div class="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded dark:bg-gray-700">
-            <svg
-              class="w-10 h-10 text-gray-200 dark:text-gray-600"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor"
-              viewBox="0 0 16 20"
-            >
-              <path d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
-              <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
-            </svg>
-          </div>
-          <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
-          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
-          <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-10 mb-4"></div>
-    
-          <span class="sr-only">Loading...</span>
-        </div>
-
-       </div>
-      
-
-      </div> -->
-
   
+      <!-- display products -->
+
   <div
   x-data
+  x-show="!$store.state.loading"
   class="grid justify-center lg:max-h-[130rem] max-w-xl mx-auto grid gap-4 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center lg:max-w-none my-4"
   >
 
 
   <template
-  x-show="$store.state.loading"
-  x-for="product in $store.state.products">
+  x-for="product in $store.state.products"
+  >
 
       <div
+      @click="$store.state.setViewedProduct(product)"
       class="flex flex-col max-h-[130rem]  cursor-pointer max-w-80 hover:-translate-y-1 hover:scale-105 duration-300 bg-white border border-slate-200 shadow shadow-slate-950/5 rounded-2xl overflow-hidden"
     >
       <img class="object-contain h-48 mt-3" :src='product.image' alt="Course 01" />
@@ -392,10 +267,43 @@
               </div>
             </h2>
           </header>
-          <!-- <Ratings {...rating} /> -->
+
+          <!-- Ratings  -->
+
+          <div class="flex items-left -ml-2 mb-2">
+       <template x-for="(count,index) in new Array(Math.round(product.rating.rate)).fill(null)">
+
+          <svg
+          :key='index'
+          class="w-4 h-4 text-yellow-300 ms-1"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+          viewBox="0 0 22 20"
+        >
+          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+        </svg>
+
+    </template>
+    <template x-for="(count,index) in new Array(Math.round(5-product.rating.rate)).fill(null)">
+        <svg
+        :key='index'
+        class="w-4 h-4 ms-1 text-gray-300 dark:text-gray-500"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="currentColor"
+        viewBox="0 0 22 20"
+      >
+        <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+      </svg>
+
+    </template>
+
+</div>
+
           <div class="text-base line-clamp-2 font-extrabold text-slate-500 leading-snug">
             <h2
-            x-text="product.price"
+            x-text="'$'+product.price"
             ></h2>
           </div>
         </div>
@@ -437,10 +345,6 @@
     </div>
 </template>
 </div>
-
-
-
-
 
 
 
@@ -491,6 +395,52 @@ x-data="{loading:$store.state.loading,products:$store.state.products}"
  </template>
     </div>
     </div>
+
+</div>
+
+ <!-- product details -->
+
+<div x-data x-show="$store.state.changeRoute">
+   
+    <div class="mt-6 sm:mt-8 lg:flex lg:items-start  lg:max-w-6xl xl:max-w-7xl ">
+        <div class="mx-auto w-2/5 flex-none">
+          <img :src='$store.state.viewedProduct.image' alt="" class="w-[90%] h-[90%]" />
+        </div>
+        <div class="mx-auto  w-[90%] space-y-2 ">
+          <h1 x-text="$store.state.viewedProduct.title" class="text-2xl md:text-4xl lg:text-4xl font-bold"></h1>
+           <div x-if="$store.state.viewedProduct.rating.rate">
+            <div class="flex gap-2">
+              <svg
+                class="w-4 h-4 text-yellow-300 ms-1"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 22 20"
+              >
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+              </svg>
+              <div x-text="$store.state.viewedProduct.rating.rate "></div>
+              <div x-text="'Reviews:'+ $store.state.viewedProduct.rating.count "></div>
+            </div>
+        </div>
+  
+          <span 
+          x-text="$store.state.viewedProduct.category"
+            class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+          >
+          </span>
+  
+          <h3 x-text="'$'+$store.state.viewedProduct." class="text-xl md:text-2xl lg:text-2xl font-bold"></h3>
+          <button class="bg-cyan-700 hover:bg-cyan-900 w-[90%] md:w-[14rem] lg:w-[14rem]  text-white font-bold py-2 px-4 rounded">
+            Add To Cart
+          </button>
+          <h2 class="text-lg font-bold">Description</h2>
+          <p x-text="'$'+$store.state.viewedProduct.description"></p>
+        </div>
+      </div>
+
+
+</div>
 
 <script defer  type="module" src="./index.js"></script>
 </body>

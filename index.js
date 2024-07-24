@@ -4,6 +4,7 @@ import { getCategories } from './api';
 
 document.addEventListener('alpine:init', () => {
 Alpine.store('state', {
+
   products: [],
   originalProducts: [],
   loading: false,
@@ -47,7 +48,6 @@ Alpine.store('state', {
   },
 
   async fetchProducts() {
-   
     if (this.filterItem != "All categories") {
        
       try {
@@ -62,6 +62,7 @@ Alpine.store('state', {
         }
         const data = await response.json();
         this.products = data,
+        console.log(this.products)
         this.originalProducts = JSON.parse(JSON.stringify(data)),
         this.loading = false
       }
@@ -81,10 +82,11 @@ Alpine.store('state', {
           );
         }
         const data = await response.json();
-       
-          this.products= data,
-         this.originalProducts= JSON.parse(JSON.stringify(data)),
-          this.loading= false
+        
+          this.products=  data;
+          
+         this.originalProducts= JSON.parse(JSON.stringify(data));
+          this.loading= false;
         
       } catch (error) {
         this.error= error

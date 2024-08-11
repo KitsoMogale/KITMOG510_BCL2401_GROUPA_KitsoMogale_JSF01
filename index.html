@@ -237,17 +237,18 @@
 
   
       <!-- display products -->
-
+<div class="grid justify-center">
   <div
   x-data
   x-show="!$store.state.loading"
-  class="grid justify-center lg:max-h-[130rem] max-w-xl mx-auto grid gap-4 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center lg:max-w-none my-4"
+  class="lg:max-h-[130rem] max-w-xl mx-auto grid gap-4 grid-cols-1 lg:grid-cols-4 md:grid-cols-2 items-center lg:max-w-none my-4"
   >
 
 
   <template
   x-for="product in $store.state.products"
   >
+  <div>
 
       <div
       @click="$store.state.setViewedProduct(product)"
@@ -343,6 +344,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 </div>
 
@@ -395,12 +397,13 @@ x-data="{loading:$store.state.loading,products:$store.state.products}"
  </template>
     </div>
     </div>
+  </div>
 
 
  <!-- product details -->
 
 <div x-data x-show="$store.state.changeRoute"
-class="z-40 mx-auto top-10 fixed bg-gray-200 max-w-xl">
+class="z-40 mx-auto top-10 fixed bg-gray-200 w-auto max-h-screen overflow-scroll p-6 overscroll-contain mb-4">
    
     <div class="mt-6 sm:mt-8 lg:flex bg-gray-200:items-start mx-auto lg:max-w-1xl xl:max-w-1xl  ">
         <div class="mx-auto w-2/5 flex-none">
@@ -436,10 +439,14 @@ class="z-40 mx-auto top-10 fixed bg-gray-200 max-w-xl">
           </button>
           <h2 class="text-lg font-bold">Description</h2>
           <p x-text="'$'+$store.state.viewedProduct.description"></p>
+          <button @click="$store.state.close()"
+          class="bg-cyan-700 hover:bg-cyan-900 w-[60%] md:w-[14rem] lg:w-[14rem]  text-white font-bold py-2 px-4 rounded"
+ >
+ Close</button>
         </div>
       </div>
   
-      <button @click="">Close</button>
+
 
 </div>
 

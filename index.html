@@ -9,7 +9,7 @@
 </head>
 <body class=" bg-blue-400" >
 
-    <div x-data x-show="!$store.state.changeRoute">
+    
     <!-- header -->
 
     <header class="sticky z-50 top-0">
@@ -396,13 +396,13 @@ x-data="{loading:$store.state.loading,products:$store.state.products}"
     </div>
     </div>
 
-</div>
 
  <!-- product details -->
 
-<div x-data x-show="$store.state.changeRoute">
+<div x-data x-show="$store.state.changeRoute"
+class="z-60 bg-gray-300 absolute top-0 lg:max-w-2xl">
    
-    <div class="mt-6 sm:mt-8 lg:flex lg:items-start  lg:max-w-6xl xl:max-w-7xl ">
+    <div class="mt-6 sm:mt-8 lg:flex lg:items-start mx-auto lg:max-w-1xl xl:max-w-1xl  ">
         <div class="mx-auto w-2/5 flex-none">
           <img :src='$store.state.viewedProduct.image' alt="" class="w-[90%] h-[90%]" />
         </div>

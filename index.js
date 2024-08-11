@@ -20,6 +20,10 @@ Alpine.store('state', {
      this.changeRoute = true;
   },
 
+  close(){
+    this.changeRoute = false;
+  },
+
   setFilterItem(item) {
            this.filterItem = item;
   },
